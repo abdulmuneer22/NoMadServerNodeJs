@@ -77,12 +77,12 @@ app.get('/getCities', function (req, res) {
           {
             "type": "show_block",
             "block_name": "some block name",
-            "title": "Show the block!"
+            "title": city_1
           },
           {
             "type": "web_url",
             "url": "https://petersapparel.parseapp.com/buy_item?item_id=100",
-            "title": "Buy Item"
+            "title": "Check Price"
           }
         ]
       }
