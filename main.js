@@ -67,22 +67,45 @@ app.get('/getCities', function (req, res) {
     var city_2 = response.data.slugs[1]
     
     res.json([
-{
-    "attachment": {
-      "type": "template",
-      "payload": {
-        "template_type": "button",
-        "text": "Hello!",
-        "buttons": [
+  {
+    "attachment":{
+      "type":"template",
+      "payload":{
+        "template_type":"generic",
+        "elements":[
           {
-            "type": "show_block",
-            "block_name": "some block name",
-            "title": city_1
+            "title":"Classic White T-Shirt",
+            "image_url":"http://petersapparel.parseapp.com/img/item100-thumb.png",
+            "subtitle":"Soft white cotton t-shirt is back in style",
+            "buttons":[
+              {
+                "type":"web_url",
+                "url":"https://petersapparel.parseapp.com/view_item?item_id=100",
+                "title":"View Item"
+              },
+              {
+                "type":"web_url",
+                "url":"https://petersapparel.parseapp.com/buy_item?item_id=100",
+                "title":"Buy Item"
+              }
+            ]
           },
           {
-            "type": "web_url",
-            "url": "https://petersapparel.parseapp.com/buy_item?item_id=100",
-            "title": "Check Price"
+            "title":"Classic Grey T-Shirt",
+            "image_url":"http://petersapparel.parseapp.com/img/item101-thumb.png",
+            "subtitle":"Soft gray cotton t-shirt is back in style",
+            "buttons":[
+              {
+                "type":"web_url",
+                "url":"https://petersapparel.parseapp.com/view_item?item_id=101",
+                "title":"View Item"
+              },
+              {
+                "type":"web_url",
+                "url":"https://petersapparel.parseapp.com/buy_item?item_id=101",
+                "title":"Buy Item"
+              }
+            ]
           }
         ]
       }
