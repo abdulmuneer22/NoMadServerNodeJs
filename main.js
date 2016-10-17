@@ -10,9 +10,7 @@ var axios = require('axios')
 
 var fs = require("fs");
 
-app.get('/', function (req, res) {
-   res.send('Hello World');
-})
+
 
 var output = [
 
@@ -22,7 +20,7 @@ var output = [
 
 
 var __dirname = "db"
-var server = app.listen(8081, function () {
+var server = app.listen(8080, function () {
    var host = server.address().address
    var port = server.address().port
    
@@ -44,14 +42,18 @@ app.get('/search/:origin/:destination', function (req, res) {
     var cardOutput = [
 
     {"text": "Here is a list of results you may be interested in!"},
-    {"text": "How can I help you?"}
-]
+    {"text": "How can I help you?"}]
 
     axios.get("https://rome2rio12.p.mashape.com/Search?dName=London&oName=Cairo", config)
     .then(function(response){
-    console.log(response.data.places)
+    //console.log(response.data.places)
     //res.end("Origin : " + response.data.places[0].name + "\nDestination : " + response.data.places[1].name)
-    res.end(cardOutput)
+    
+    
+    res.json([
+        {"text" : response.data.places[0].name},
+        {"text" : response.data.places[1].name},
+    ])
     });
 
    //res.end( "origin is " + origin + "  destination is  " + destination );
