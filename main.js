@@ -12,8 +12,7 @@ var output = [{
 		"type": "template",
 		"payload": {
 			"template_type": "generic",
-			"elements": [
-            {
+			"elements": [{
 				"title": "Top Selling Rain Suits - Clearance Sale",
 				"image_url": "https://fd379b09dfe5fd258cee-4c7efcc0fa50ed2f0ba8ecc23dd2f42d.ssl.cf1.rackcdn.com/164777-939-list.jpg",
 				"subtitle": "Get Top Selling Rain Suits - Clearance Sale at Starts @ Rs.189",
@@ -22,9 +21,7 @@ var output = [{
 					"title": "Shop Now",
 					"url": "http://www.amazon.in/"
 				}]
-			}, 
-            
-            {
+			}, {
 				"title": " Custom Title ",
 				"image_url": "https://fd379b09dfe5fd258cee-4c7efcc0fa50ed2f0ba8ecc23dd2f42d.ssl.cf1.rackcdn.com/161543-e12-list.jpg",
 				"subtitle": "Get Classic Aviators \u0026 Stylish Wayfarer Unisex Sunglasses at 129",
