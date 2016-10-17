@@ -67,10 +67,28 @@ app.get('/getCities', function (req, res) {
     var city_2 = response.data.slugs[1]
     
     res.json([
-        {"text" : "List of cities you might be interested to visit"},
-        {"text" : city_1},
-        {"text" : city_2},
-    ])
+{
+    "attachment": {
+      "type": "template",
+      "payload": {
+        "template_type": "button",
+        "text": "Hello!",
+        "buttons": [
+          {
+            "type": "show_block",
+            "block_name": "some block name",
+            "title": "Show the block!"
+          },
+          {
+            "type": "web_url",
+            "url": "https://petersapparel.parseapp.com/buy_item?item_id=100",
+            "title": "Buy Item"
+          }
+        ]
+      }
+    }
+  }
+])
     });
 
    //res.end( "origin is " + origin + "  destination is  " + destination );
