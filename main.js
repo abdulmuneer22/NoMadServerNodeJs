@@ -7,18 +7,10 @@ app.get('/', function (req, res) {
    res.send('Hello World');
 })
 
-var output = [{
-	"attachment": {
-		"type": "template",
-		"payload": {
-			"template_type": "generic",
-			"elements": [
-                {"text": "Welcome to our store!"},
-                {"text": "How can I help you?"}
-            ]
-		}
-	}
-}]
+var output = [
+    {"text": "Welcome to our store!"},
+    {"text": "How can I help you?"}
+]
 var __dirname = "db"
 
 app.get('/list_users', function (req, res) {
