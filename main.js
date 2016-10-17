@@ -68,8 +68,8 @@ app.get('/getCities/:budget', function (req, res) {
     var city_2 = response.data.slugs[1]
     
     res.json([
-  {"text": city_1},
-  {"text": city_2}
+  {"text": city_1}
+  
 ])
     });
 
