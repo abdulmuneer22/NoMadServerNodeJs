@@ -1,0 +1,24 @@
+{
+  "name": "nomadly",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "express": "^4.14.0",
+    "fs": "0.0.1-security"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abdulmuneer22/NoMadServerNodeJs.git"
+  },
+  "author": "muneer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/abdulmuneer22/NoMadServerNodeJs/issues"
+  },
+  "homepage": "https://github.com/abdulmuneer22/NoMadServerNodeJs#readme"
+}
