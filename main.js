@@ -8,9 +8,12 @@ app.get('/', function (req, res) {
 })
 
 var output = [
-    {"text": "Welcome to our store!"},
+
+    {"text": "Here is a list of results you may be interested in!"},
     {"text": "How can I help you?"}
 ]
+
+
 var __dirname = "db"
 
 app.get('/list_users', function (req, res) {
@@ -19,6 +22,14 @@ app.get('/list_users', function (req, res) {
       res.end( data );
    });
 })
+
+
+//method to get destinations and origin
+
+app.get('/search/:origin/:destination', function (req, res) {
+   console.log(req.param)
+})
+
 
 app.get('/search', function (req, res) {
    console.log("Show out put for search API");
