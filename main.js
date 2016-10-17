@@ -69,6 +69,7 @@ app.get('/getCities/:budget/:climate', function (req, res) {
     switch(climate){
         case 'COLD' : 
         var climateFilter = "f2_type=lt&f2_max=20"
+        console.log(climateFilter)
 
         case 'MILD':
         var climateFilter = "bt&f2_min=16&f2_max=25"
