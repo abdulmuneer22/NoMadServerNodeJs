@@ -12,16 +12,10 @@ var output = [{
 		"type": "template",
 		"payload": {
 			"template_type": "generic",
-			"elements": [{
-				"title": "List Of Hotels",
-				"image_url": "https://fd379b09dfe5fd258cee-4c7efcc0fa50ed2f0ba8ecc23dd2f42d.ssl.cf1.rackcdn.com/164777-939-list.jpg",
-				"subtitle": "Get Top Selling Rain Suits - Clearance Sale at Starts @ Rs.189",
-				"buttons": [{
-					"type": "web_url",
-					"title": "Shop Now",
-					"url": "http://www.amazon.in/"
-				}]
-			}]
+			"elements": [
+                {"text": "Welcome to our store!"},
+                {"text": "How can I help you?"}
+            ]
 		}
 	}
 }]
