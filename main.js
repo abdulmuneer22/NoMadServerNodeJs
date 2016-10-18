@@ -40,10 +40,10 @@ app.get('/search/:origin/:destination', function (req, res) {
     //res.end("Origin : " + response.data.places[0].name + "\nDestination : " + response.data.places[1].name)
 
     //find budget using rome2rio12
-    
+
 
     res.json([
-        {"text" : response.data},
+        {"text" : response.data.routes},
 
     ])
     });
