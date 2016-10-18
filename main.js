@@ -90,7 +90,7 @@ app.get('/getCities/:budget/:climate', function (req, res) {
 
               //https://nomadlist.com/api/v2/filter/city?c=5&f1_target=long_term_cost_in_usd&f1_type=lt&f1_max="+budget+"&f2_target=temperatureC&" +climateFilter+ "&f3_target=internet_speed&f3_type=gt&f3_min=15&f4_target=nightlife&f4_type=gt&f4_min=3&f5_target=region&f5_type=em&f5_value=Asia&s=nomad_score&o=desc
 
-    axios.get("https://nomadlist.com/api/v2/filter/city?c=2&f1_target=long_term_cost_in_usd&f1_type=lt&f1_max="+budget+"&f2_target=temperatureC&"+climateFilter+&s=nomad_score&o=desc")
+    axios.get("https://nomadlist.com/api/v2/filter/city?c=2&f1_target=long_term_cost_in_usd&f1_type=lt&f1_max="+budget+"&f2_target=temperatureC&"+climateFilter+"&s=nomad_score&o=desc")
     .then(function(response){
 
     var city_1 = ''
