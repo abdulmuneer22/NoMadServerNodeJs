@@ -85,7 +85,44 @@ app.get('/getPrice/:Origin/:Destination',function(req,res){
 
 });
 
+
 app.get('/getCities/:budget/:climate', function (req, res) {
+  var budget = req.params.budget
+  var climate = req.params.climate
+
+  switch(climate){
+        case 'COLD' :
+        var climateFilter = "f2_type=lt&f2_max=20"
+        console.log(climateFilter)
+
+        case 'MILD':
+        var climateFilter = "bt&f2_min=16&f2_max=25"
+
+        case 'WARM':
+        var climateFilter = "f2_type=gt&f2_min=21"
+
+        default :
+        var climateFilter = "f2_type=lt&f2_max=20"
+  
+
+
+    }
+//API CALL
+axios.get("https://nomadlist.com/api/v2/filter/city?c=2&f1_target=long_term_cost_in_usd&f1_type=lt&f1_max="+budget+"&f2_target=temperatureC&"+climateFilter+"&s=nomad_score&o=desc")
+.then(function(response){
+var data = response.data.slugs[0]
+
+res.json([{"text" : data}])
+  
+})
+
+})
+
+
+
+
+
+app.get('/_getCities/:budget/:climate', function (req, res) {
 
     var budget = req.params.budget
     var climate = req.params.climate
@@ -109,26 +146,31 @@ app.get('/getCities/:budget/:climate', function (req, res) {
     }
 
 
-              //https://nomadlist.com/api/v2/filter/city?c=5&f1_target=long_term_cost_in_usd&f1_type=lt&f1_max="+budget+"&f2_target=temperatureC&" +climateFilter+ "&f3_target=internet_speed&f3_type=gt&f3_min=15&f4_target=nightlife&f4_type=gt&f4_min=3&f5_target=region&f5_type=em&f5_value=Asia&s=nomad_score&o=desc
+             
 
     axios.get("https://nomadlist.com/api/v2/filter/city?c=2&f1_target=long_term_cost_in_usd&f1_type=lt&f1_max="+budget+"&f2_target=temperatureC&"+climateFilter+"&s=nomad_score&o=desc")
     .then(function(response){
     //iterate the response and push to array
 
-    
+    //response.data.slugs
+
+    var data = response.data.slugs
 
     var cities = [{"text" : "Cities You Might Be Interested In "}]
-    response.data.slugs.forEach((city)=>{
-
-      console.log("city name " + city);
-      cities.items.push({
-        "text" : city
-      })
-
+    var next =  [{"text" : "Another You Might Be Interested In "}]
+    cities.push(next)
+    
+    data.forEach((child)=>{
+      console.log(log)
+      var _next = [{"text" : "test"}]
+      cities.push(_next)
 
     })
 
+
+
     res.json(cities)
+
     });
 
    //res.end( "origin is " + origin + "  destination is  " + destination );
