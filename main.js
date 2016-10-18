@@ -2,28 +2,21 @@ var express = require('express');
 var app = express();
 
 var axios = require('axios')
-
-
-
-
-/*********************** */
-
 var fs = require("fs");
 
 
 
-function getnearbyCities(){
-
-}
-
-
-var __dirname = "db"
 var server = app.listen(8080, function () {
    var host = server.address().address
    var port = server.address().port
 
    console.log("Example app listening at http://%s:%s", host, port)
 })
+
+
+
+
+
 
 
 app.get('/search/:origin/:destination', function (req, res) {
@@ -46,10 +39,12 @@ app.get('/search/:origin/:destination', function (req, res) {
     //console.log(response.data.places)
     //res.end("Origin : " + response.data.places[0].name + "\nDestination : " + response.data.places[1].name)
 
+    //find budget using rome2rio12
+    
 
     res.json([
-        {"text" : response.data.places[0].name},
-        {"text" : response.data.places[1].name},
+        {"text" : response.data},
+
     ])
     });
 
@@ -92,22 +87,22 @@ app.get('/getCities/:budget/:climate', function (req, res) {
 
     axios.get("https://nomadlist.com/api/v2/filter/city?c=2&f1_target=long_term_cost_in_usd&f1_type=lt&f1_max="+budget+"&f2_target=temperatureC&"+climateFilter+"&s=nomad_score&o=desc")
     .then(function(response){
+    //iterate the response and push to array
 
-    var city_1 = ''
 
-    if(!response.data.slugs[0]){
-        var city_1 = "No Results Found"
-    }else{
-        var city_1 = response.data.slugs[0]
 
-    }
+    var cities = [{"text" : "Cities You Might Be Interested In "}]
+    response.data.slugs.forEach((city)=>{
 
-    var city_2 = response.data.slugs[1]
+      console.log("city name " + city);
+      cities.items.push({
+        "text" : city
+      })
 
-    res.json([
-  {"text": city_1}
 
-])
+    })
+
+    res.json(cities)
     });
 
    //res.end( "origin is " + origin + "  destination is  " + destination );
