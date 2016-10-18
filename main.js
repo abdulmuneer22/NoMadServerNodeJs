@@ -41,12 +41,16 @@ app.get('/search/:origin/:destination', function (req, res) {
 
     //find budget using rome2rio12
 
+    //price response.data.routes[0].indicativePrice.price}
 
     res.json([
-        {"text" : response.data.routes},
+        {"text" : response.data.routes[0].indicativePrice},
 
     ])
     });
+
+    price = response.data.routes[0].indicativePrice;
+    
 
    //res.end( "origin is " + origin + "  destination is  " + destination );
 })
@@ -57,7 +61,29 @@ app.get('/',function(req,res){
 })
 
 
+app.get('/getPrice/:Origin/:Destination',function(req,res){
+  var Origin = req.params.Origin
+  var Destination =req.params.Destination
 
+  //API headers
+  var config = {
+    headers: {'X-Mashape-Key': 'n6R9kUKpylmshxI5dWxq1u7HmLQIp1hYPqLjsnyFMjlJo3HN2O'}
+  };
+
+  axios.get("https://rome2rio12.p.mashape.com/Search?dName="+Destination+"&oName="+Origin, config)
+  .then(function(response){
+
+  //console.log(response.data.routes[0].indicativePrice.price)
+
+  res.json([
+        {"text" : response.data.routes[0].indicativePrice.price}])
+  
+  
+
+  })
+
+
+});
 
 app.get('/getCities/:budget/:climate', function (req, res) {
 
@@ -89,7 +115,7 @@ app.get('/getCities/:budget/:climate', function (req, res) {
     .then(function(response){
     //iterate the response and push to array
 
-
+    
 
     var cities = [{"text" : "Cities You Might Be Interested In "}]
     response.data.slugs.forEach((city)=>{
