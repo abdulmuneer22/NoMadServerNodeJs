@@ -1,0 +1,91 @@
+/*******************Starting server */
+
+var express = require('express');
+var app = express();
+
+var axios = require('axios')
+var fs = require("fs");
+
+
+
+var server = app.listen(8080, function () {
+   var host = server.address().address
+   var port = server.address().port
+
+   console.log("Example app listening at http://%s:%s", host, port)
+})
+
+/************************************* */
+
+
+
+// API Call to make when two cities are known 
+// endpoint : server:8080/getPrice/:origin/:destination'
+//result {"text" : 'Price'}
+
+app.get('/getPrice/:Origin/:Destination',function(req,res){
+  var Origin = req.params.Origin
+  var Destination =req.params.Destination
+
+  //API headers
+  var config = {
+    headers: {'X-Mashape-Key': 'n6R9kUKpylmshxI5dWxq1u7HmLQIp1hYPqLjsnyFMjlJo3HN2O'}
+  };
+
+  axios.get("https://rome2rio12.p.mashape.com/Search?dName="+Destination+"&oName="+Origin, config)
+  .then(function(response){
+  res.json([
+        {"text" : response.data.routes[0].indicativePrice.price}])
+  })
+
+
+});
+
+
+// API Call to get Cities based on preferances 
+// endpoint : server:8080/getCities/:budget/:climate'
+//result list of top five cities
+//result [
+//    {"text" : 'city_1'},
+//    {"text" : 'city_2'},
+//    {"text" : 'city_3'},
+//    {"text" : 'city_4'},
+//    {"text" : 'city_5'},
+        ]
+
+
+
+app.get('/getCities/:budget/:climate', function (req, res) {
+  var budget = req.params.budget
+  var climate = req.params.climate
+
+  switch(climate){
+        case 'COLD' :
+        var climateFilter = "f2_type=lt&f2_max=20"
+        console.log(climateFilter)
+
+        case 'MILD':
+        var climateFilter = "bt&f2_min=16&f2_max=25"
+
+        case 'WARM':
+        var climateFilter = "f2_type=gt&f2_min=21"
+
+        case 'HOT' :
+        var climateFilter = "f1_type=gt&f1_min=30"
+
+        default :
+        var climateFilter = "f2_type=lt&f2_max=20"
+        }
+
+//API CALL
+axios.get("https://nomadlist.com/api/v2/filter/city?c=2&f1_target=long_term_cost_in_usd&f1_type=lt&f1_max="+budget+"&f2_target=temperatureC&"+climateFilter+"&s=nomad_score&o=desc")
+.then(function(response){
+var data = response.data.slugs[0]
+
+//get first five cities
+
+res.json([{"text" : data}])
+  
+})
+
+})
