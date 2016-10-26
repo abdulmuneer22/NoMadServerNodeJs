@@ -1,8 +1,7 @@
 var express = require('express');
 var app = express();
-var i = 10;
 var axios = require('axios')
-var fs = require("fs");
+
 var querystring = require('querystring')
 
 var async = require("async");
@@ -18,12 +17,13 @@ var server = app.listen(8080, function () {
 
 
 
-app.get('/api/:Origin/:Destination/:Climate',function(req,res){
+app.get('/api/:Origin/:Destination/:Climate/:Budget',function(req,res){
 
 var Origin = req.params.Origin;
 var Destination = req.params.Destination
 var Climate = req.params.Climate
-var NomadURL ;
+var Budget = Number(req.params.Budget)
+
 var CityList = []
 var count = 0;
 var price;
@@ -41,11 +41,17 @@ var f = function(arg,callback){
     axios.get("https://rome2rio12.p.mashape.com/Search?dName="+arg.CITYNAME+"&oName="+Origin, config)
     .then((response)=>{
         //console.log(response.data.routes[0].indicativePrice.price)
+        console.log(typeof response.data.routes[0].indicativePrice.price + " : " + typeof Budget)
         console.log("Started")
-        data.push({
-            "CityName" : arg.CITYNAME,
-            "Price" : response.data.routes[0].indicativePrice.price
-        })
+
+        if(response.data.routes[0].indicativePrice.price < Budget){
+            data.push(
+            {"text" : arg.CITYNAME},
+            {"text" : response.data.routes[0].indicativePrice.price}
+        )
+        }
+
+        
     console.log("pushed")
     })
     .then(()=>{
@@ -59,6 +65,8 @@ var f = function(arg,callback){
 
 async.forEach(a,f,function(err){
     console.log("done")
+    
+    
     res.send(data)
 })
 
