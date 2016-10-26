@@ -1,0 +1,459 @@
+// API Call to make when two cities are known 
+// endpoint : server:8080/getPrice/:origin/:destination'
+//result {"text" : 'Price'}
+
+app.get('/getPrice/:Origin/:Destination',function(req,res){
+  var Origin = req.params.Origin
+  var Destination =req.params.Destination
+
+  //API headers
+  var config = {
+    headers: {'X-Mashape-Key': 'n6R9kUKpylmshxI5dWxq1u7HmLQIp1hYPqLjsnyFMjlJo3HN2O'}
+  };
+
+  axios.get("https://rome2rio12.p.mashape.com/Search?dName="+Destination+"&oName="+Origin, config)
+  .then(function(response){
+  res.json([
+        {"text" : response.data.routes[0].indicativePrice.price}])
+  })
+
+
+});
+
+
+/* API Call to get Cities based on preferances 
+// endpoint : server:8080/getCities/:budget/:climate'
+//result list of top five cities
+//result [
+//    {"text" : 'city_1'},
+//    {"text" : 'city_2'},
+//    {"text" : 'city_3'},
+//    {"text" : 'city_4'},
+//    {"text" : 'city_5'},
+//  ]
+
+*/
+
+var getPrice = (Origin,Destination) => {
+  // Price
+  var Price = ""
+
+  //API headers
+  var config = {
+    headers: {'X-Mashape-Key': 'n6R9kUKpylmshxI5dWxq1u7HmLQIp1hYPqLjsnyFMjlJo3HN2O'}
+  };
+
+  axios.get("https://rome2rio12.p.mashape.com/Search?dName="+Destination+"&oName="+Origin, config)
+  .then((response)=>{
+    console.log(response.data.routes[0].indicativePrice.price)
+    Price = response.data.routes[0].indicativePrice.price
+  })
+
+  return Price;
+
+}
+
+app.get('/testJson',function(req,res){
+
+axios
+
+})
+
+
+app.get('/PriceToACity/:Destination/:Origin',function(req,res){
+var _Price =  getPrice(req.params.Destination,req.params.Origin)
+
+console.log(_Price)
+
+
+})
+
+
+// testing end points of hidereg
+
+// install ---- npm install --save querystring
+
+app.get('/testHed', function (req, res) {
+
+var URL = "http://www.hidereg.de/api/user/login"
+
+axios.post(URL,querystring.stringify({
+  username : 'muneeertest',
+  password : '123456789'
+}))
+.then((response)=>{
+  console.log(response.data.success.token)
+})
+
+});
+
+
+
+app.get('/getCities/:budget/:climate/:Origin', function (req, res) {
+  
+  
+  var budget = req.params.budget
+  var climate = req.params.climate
+  var OriginCity = req.params.Origin
+  var City_1_Price = ""
+  var City_2_Price = ""
+  var City_3_Price = ""
+  var City_4_Price = ""
+  var City_5_Price = ""
+
+  var city_1 = ""
+  var city_2 = ""
+  var city_3 = ""
+  var city_4 = ""
+  var city_5 = ""
+
+  var Query = ""
+  
+  var Destination = "London"
+  console.log("staretd !!")
+  // rome2rio12 api header
+  var config = {headers: {'X-Mashape-Key': 'n6R9kUKpylmshxI5dWxq1u7HmLQIp1hYPqLjsnyFMjlJo3HN2O'}};
+
+  if(climate === "COLD"){
+    //console.log("WARM")
+    Query = "https://nomadlist.com/api/v2/filter/city?c=1&f1_target=temperatureC&f1_type=lt&f1_max=20&s=nomad_score&o=desc"
+    }else if(climate === "MILD"){
+    Query = "https://nomadlist.com/api/v2/filter/city?c=1&f1_target=temperatureC&f1_type=bt&f1_min=16&f1_max=25&s=nomad_score&o=desc"
+      
+    }else if(climate === "WARM"){
+    Query = "https://nomadlist.com/api/v2/filter/city?c=1&f1_target=temperatureC&f1_type=gt&f1_min=21&s=nomad_score&o=desc"
+      
+    }else if(climate === "HOT"){
+      Query = "https://nomadlist.com/api/v2/filter/city?c=1&f1_target=temperatureC&f1_type=gt&f1_min=30&s=nomad_score&o=desc"
+      console.log(Query)
+    }
+
+
+
+
+
+//API CALL
+//taking climate as params
+//https://nomadlist.com/api/v2/filter/city?c=1&f1_target=temperatureC&"+climateFilter+"&s=nomad_score&o=desc
+
+console.log(Query)
+axios.get(Query)
+.then(
+  function(response){
+
+  console.log(Object.keys(response.data.slugs).length)
+  var DestinationsArray = []
+
+  var OutPutArray = []
+  for(i=0;i<Object.keys(response.data.slugs).length;i++){
+  console.log(i)
+
+  console.log(response.data.slugs[i])
+  //get Name Translation from seperate API
+  DestinationsArray.push({
+    Destination : response.data.slugs[i]
+  })
+
+
+  }
+  
+
+  // Do rome2rio12 call Now
+
+  DestinationsArray.forEach((child)=>{
+  
+
+  
+  var config = {headers: {'X-Mashape-Key': 'n6R9kUKpylmshxI5dWxq1u7HmLQIp1hYPqLjsnyFMjlJo3HN2O'}};
+
+  if(child.Destination != santa-cruz-bolivia){
+
+  axios.get("https://rome2rio12.p.mashape.com/Search?dName="+child.Destination+"&oName="+OriginCity, config)
+  .then(function(response){
+  //res.send(response.data.routes[0].indicativePrice.price)
+  })
+  .catch((error)=>{
+    //res.send(error)
+    })
+  }
+ 
+
+
+  })
+
+  //res.send(DestinationsArray)
+
+
+  
+
+
+  
+
+})
+//.catch((error)=>{console.log(error)})
+
+
+
+/*
+.then(function(){ 
+
+
+//loop for all cities
+
+
+
+//make rome2rio12 call Here
+/*
+console.log("Make rome2rio12 API Call Now")
+
+    axios.get("https://rome2rio12.p.mashape.com/Search?dName="+city_1+"&oName="+OriginCity, config)
+    .then(function(response){
+      
+      City_1_Price = response.data.routes[0].indicativePrice.price + "$ "
+
+      // Get Price for second city 
+      axios.get("https://rome2rio12.p.mashape.com/Search?dName="+city_2+"&oName="+OriginCity, config)
+      .then(function(response){
+        City_2_Price = response.data.routes[0].indicativePrice.price + "$ "
+          // get price for 3rd city Here
+              axios.get("https://rome2rio12.p.mashape.com/Search?dName="+city_3+"&oName="+OriginCity, config)
+              .then(function(response){
+                City_3_Price = response.data.routes[0].indicativePrice.price + "$ "
+
+                    // get Price for 4th City Now
+                        axios.get("https://rome2rio12.p.mashape.com/Search?dName="+city_4+"&oName="+OriginCity, config)
+                        .then(function(response){
+            
+                            City_4_Price = response.data.routes[0].indicativePrice.price + "$ "
+                            
+                              // Ge City 5 Price Now
+                                axios.get("https://rome2rio12.p.mashape.com/Search?dName="+city_5+"&oName="+OriginCity, config)
+                                .then(function(response){
+                                    City_5_Price = response.data.routes[0].indicativePrice.price + "$ "
+                                    
+                                      res.json([
+                                      {"text" : "Here Are Top Five Cities You May Be Interested In"},
+                                      {"text" : city_1},
+                                      {"text" : City_1_Price},
+                                      {"text" : city_2},
+                                      {"text" : City_2_Price},
+                                      {"text" : city_3},
+                                      {"text" : City_3_Price},
+                                      {"text" : city_4},
+                                      {"text" : City_4_Price},
+                                      {"text" : city_5},
+                                      {"text" : City_5_Price},
+                                      
+                                      ])
+
+                                })
+
+
+
+                            
+                        })
+
+                 
+
+                
+              })
+
+            
+      
+      })
+
+
+      
+    })
+    
+
+
+
+
+})
+
+*/
+
+
+
+})
+
+
+{"CITYNAME":"Canggu"},
+{"CITYNAME":"Hanoi"},
+{"CITYNAME":"Los Angeles"},
+{"CITYNAME":"Gurgaon"},
+{"CITYNAME":"Kuala Lumpur"},
+{"CITYNAME":"Chiang Rai"},
+{"CITYNAME":"Tainan"},
+{"CITYNAME":"San Juan"},
+{"CITYNAME":"Brasilia"},
+{"CITYNAME":"Mount Vernon"},
+{"CITYNAME":"Hermosillo"},
+{"CITYNAME":"Scottsdale"},
+{"CITYNAME":"Darwin"},
+{"CITYNAME":"Merida"},
+{"CITYNAME":"Muscat"},
+{"CITYNAME":"Visakhapatnam"},
+{"CITYNAME":"Goiania"},
+{"CITYNAME":"Johor Bahru"},
+{"CITYNAME":"Manama"},
+{"CITYNAME":"Barranquilla"},
+{"CITYNAME":"Sharjah"},
+{"CITYNAME":"Surabaya"},
+{"CITYNAME":"Dammam"},
+{"CITYNAME":"Hoi An"},
+{"CITYNAME":"Raipur"},
+{"CITYNAME":"Chennai"},
+{"CITYNAME":"AbuDhabi"},
+{"CITYNAME":"Da Nang"},
+{"CITYNAME":"Dubai"},
+{"CITYNAME":"Guwahati"},
+{"CITYNAME":"Chandigarh"},
+{"CITYNAME":"Doha"},
+{"CITYNAME":"Vijayawada"},
+{"CITYNAME":"Jodhpur"},
+{"CITYNAME":"Dhaka"},
+{"CITYNAME":"Tirupur"},
+{"CITYNAME":"Tulum"},
+{"CITYNAME":"Cirebon"},
+{"CITYNAME":"Siem Reap"},
+{"CITYNAME":"Jakarta"},
+{"CITYNAME":"Phnom Penh"},
+{"CITYNAME":"Jeddah"},
+{"CITYNAME":"Riyadh"},
+{"CITYNAME":"Santa Cruz"},
+{"CITYNAME":"New Delhi"},
+{"CITYNAME":"Lahore"},
+{"CITYNAME":"Aurangabad"},
+{"CITYNAME":"Mumbai"},
+{"CITYNAME":"Kalyan"},
+{"CITYNAME":"Nagpur"},
+{"CITYNAME":"Belem"},
+{"CITYNAME":"Varanasi"},
+{"CITYNAME":"Jaipur"},
+{"CITYNAME":"Ludhiana"},
+{"CITYNAME":"Jamshedpur"},
+{"CITYNAME":"Vientiane"},
+{"CITYNAME":"Amritsar"},
+{"CITYNAME":"Ahmedabad"},
+{"CITYNAME":"Lucknow"},
+{"CITYNAME":"Surat"},
+{"CITYNAME":"Anapolis"},
+{"CITYNAME":"Thane"},
+{"CITYNAME":"Vadodara"},
+{"CITYNAME":"Gwalior"},
+{"CITYNAME":"Mysore"},
+{"CITYNAME":"Kinshasa"},
+{"CITYNAME":"Windhoek"},
+{"CITYNAME":"Jabalpur"},
+{"CITYNAME":"Indore"},
+{"CITYNAME":"Madurai"},
+{"CITYNAME":"Noida"},
+{"CITYNAME":"Agra"},
+{"CITYNAME":"Pekanbaru"},
+{"CITYNAME":"Bhopal"},
+{"CITYNAME":"surakarta"},
+{"CITYNAME":"bamako"},
+{"CITYNAME":"kanpur"},
+{"CITYNAME":"semarang"},
+{"CITYNAME":"allahabad"},
+{"CITYNAME":"bhubaneswar"},
+{"CITYNAME":"patna"},
+{"CITYNAME":"goa"},
+{"CITYNAME":"brazzaville"},
+{"CITYNAME":"chittagong"},
+{"CITYNAME":"dar"},
+{"CITYNAME":"rajkot"},
+{"CITYNAME":"kolkata"},
+{"CITYNAME":"khulna"},
+{"CITYNAME":"kota"},
+{"CITYNAME":"dahab"},
+{"CITYNAME":"harare"},
+{"CITYNAME":"faisalabad"},
+{"CITYNAME":"khartoum"},
+{"CITYNAME":"kano"},
+{"CITYNAME":"peshawar"},
+{"CITYNAME":"rawalpindi"},
+{"CITYNAME":"karachi"},
+{"CITYNAME":"tripoli"},
+{"CITYNAME":"gujranwala"},
+{"CITYNAME":"bahawalpur"},
+{"CITYNAME":"baghdad"},
+{"CITYNAME":"basra"}]
+
+
+
+
+
+DestinationList.forEach((child)=>{
+        
+        console.log(apiCalls)
+        
+
+        if(apiCalls < 10){
+            //console.log("Call apiCalls")
+            
+          
+        axios.get("https://rome2rio12.p.mashape.com/Search?dName="+child.CITYNAME+"&oName="+Origin, config)
+        .then((response)=>{
+
+            
+
+            if(Number(response.data.routes[0].indicativePrice.price) < Budget)
+            {
+            OutPut.push(
+                {
+                "Text" : child.CITYNAME
+                },
+                {
+                "Text" : response.data.routes[0].indicativePrice.price + " $" 
+                }
+            
+                )
+            }else{
+                OutPut.push(
+                {
+                "Text" : "Sorry No Matching Results Found !!"
+                }
+                
+            
+                )
+                
+                
+
+            }
+           
+            
+            
+
+            console.log("apiCalls" + apiCalls)
+            if(i>10){
+            second(OutPut)
+
+
+            }   
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+
+        
+        
+        
+        
+
+        }
+        
+
+     
+        
+        
+        
+
+
+
+        
+
+
+    })
