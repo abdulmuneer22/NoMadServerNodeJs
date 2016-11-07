@@ -1,0 +1,29 @@
+[  
+   {  
+      "attachment":{  
+         "type":"template",
+         "payload":{  
+            "template_type":"generic",
+            "elements":[  
+               {  
+                  "title":"London",
+                  "image_url":"http://i.imgur.com/sr947IY.jpg",
+                  "subtitle":"Great Britain",
+                  "buttons":[  
+                     {  
+                        "type":"web_url",
+                        "url":"https://petersapparel.parseapp.com/view_item?item_id=100",
+                        "title":"299 $"
+                     },
+                     {  
+                        "type":"web_url",
+                        "url":"https://petersapparel.parseapp.com/view_item?item_id=100",
+                        "title":"Book Now"
+                     }
+                  ]
+               }
+            ]
+         }
+      }
+   }
+]

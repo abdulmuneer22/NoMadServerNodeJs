@@ -116,7 +116,13 @@ app.get('/getCities/:budget/:climate/:Origin', function (req, res) {
 
   if(climate === "COLD"){
     //console.log("WARM")
-    Query = "https://nomadlist.com/api/v2/filter/city?c=1&f1_target=temperatureC&f1_type=lt&f1_max=20&s=nomad_score&o=desc"
+    Query = "https://nomadlist.com/api/v2/filter/city?c=1&
+    
+    f1_target=temperatureC&
+    
+    f1_type=
+    
+    lt&f1_max=20&s=nomad_score&o=desc"
     }else if(climate === "MILD"){
     Query = "https://nomadlist.com/api/v2/filter/city?c=1&f1_target=temperatureC&f1_type=bt&f1_min=16&f1_max=25&s=nomad_score&o=desc"
       
@@ -124,7 +130,8 @@ app.get('/getCities/:budget/:climate/:Origin', function (req, res) {
     Query = "https://nomadlist.com/api/v2/filter/city?c=1&f1_target=temperatureC&f1_type=gt&f1_min=21&s=nomad_score&o=desc"
       
     }else if(climate === "HOT"){
-      Query = "https://nomadlist.com/api/v2/filter/city?c=1&f1_target=temperatureC&f1_type=gt&f1_min=30&s=nomad_score&o=desc"
+      Query = "https://nomadlist.com/api/v2/filter/city?c=1&f1_target=temperatureC&
+      f1_type=gt&f1_min=30&s=nomad_score&o=desc"
       console.log(Query)
     }
 
