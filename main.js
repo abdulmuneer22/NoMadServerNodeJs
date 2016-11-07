@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var axios = require('axios')
-
+//http://nodeapi-92027.onmodulus.net/api/{{Origin}}/{{maxBudget}}/{{cityClimate}}/2/Internet/{{Gay}}/{{Weed}}/
 var querystring = require('querystring')
 
 var async = require("async");
@@ -15,6 +15,18 @@ var server = app.listen(8080, function () {
 
 
 app.get('/api/:Origin/:Budget/:Climate/:Month/:Internet/:third/:fourth',function(req,res){
+console.log(" Origin City:"  +req.params.Origin)
+console.log(" Budget :"  +req.params.Budget)
+console.log(" Climate :"  +req.params.Climate)
+console.log(" Month :"  +req.params.Month)
+console.log(" Internet :"  +req.params.Internet)
+console.log(" Gay :"  +req.params.third)
+console.log(" Weed :"  +req.params.fourth)
+
+
+
+
+
 
 //http://localhost:8080/api/London/200/COLD/1/Internet/Air/Nightlife/Gay/Weed
 //https://nomadlist.com/api/v2/filter/city?c=2 &f1_target=month&f1_type=em&f1_value=1&f2_target=temperatureC&f2_type=lt&f2_max=20&s=nomad_score&o=desc
@@ -62,7 +74,7 @@ var fourth = req.params.fourth
 
 
 
-if(!third.localeCompare("Gay")){
+if(!third.localeCompare("Gay+Friendly")){
     console.log("True")
     filtercount = 3
     var gayfilter = "&f3_target=lgbt_friendly&f3_type=gt&f3_min=3"
@@ -70,7 +82,7 @@ if(!third.localeCompare("Gay")){
     url = baseurl+filtercount+"&f1_target=month&f1_type=em&f1_value="+Month+"&f2_target=temperatureC&"+temperateFilter+gayfilter+"&s=nomad_score&o=desc"
     console.log(url)
 
-    if(!fourth.localeCompare("Weed")){
+    if(!fourth.localeCompare("Legal+Weed")){
     //console.log("True")
     filtercount = 4
     
@@ -81,7 +93,7 @@ if(!third.localeCompare("Gay")){
 }
 }else{
     console.log("Skipped Gay , Check for Weed")
-    if(!fourth.localeCompare("Weed")){
+    if(!fourth.localeCompare("Legal+Weed")){
     //console.log("True")
     filtercount = 3
     
@@ -111,7 +123,9 @@ console.log(url)
 
 
 
-res.send("_______")
+res.send([{
+    "text" : url
+}])
 
 
 

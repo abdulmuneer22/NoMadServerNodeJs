@@ -111,7 +111,9 @@ console.log(url)
 
 
 
-res.send("_______")
+res.send([{
+    "text" : url
+}])
 
 
 
