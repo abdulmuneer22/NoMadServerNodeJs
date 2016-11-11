@@ -232,6 +232,7 @@ if(NomadResult.length == 0){
            .then((response)=>{
                var CurrentPriceForThisCity = Math.ceil(response.data.Itineraries[0].PricingOptions[0].Price)
                CurrentPriceForThisCity = Number(CurrentPriceForThisCity)
+               var imagename = currentCity 
                var CurrentCity = currentCity.split('-').join(' ')
                CurrentCity = CurrentCity.toUpperCase()
                
@@ -244,11 +245,36 @@ if(NomadResult.length == 0){
                    resCount = resCount + 1
                    console.log(resCount + " : " +DestinationCityCount)
                    tempRes.push(
-                       {"text" : CurrentCity},
-                       {"text" : CurrentPriceForThisCity}
+                       
+ 
+    {
+      "attachment":{
+        "type":"template",
+        "payload":{
+          "template_type":"generic",
+          "elements":[
+            {
+              "title":CurrentCity,
+              "image_url":"https://nomadlist.com/assets/img/cities/"+imagename+"-500px.jpg",
+              "subtitle":"Click The Link Below => ",
+              "buttons":[
+                {
+                  "type":"web_url",
+                  "url":"https://petersapparel.parseapp.com/view_item?item_id=100",
+                  "title":"Visit"
+                }
+              ]
+            }
+            
+          ]
+        }
+      }
+    }
+  
+
                    )
 
-                   if(resCount > 2 || resCount == DestinationCityCount){
+                   if(resCount > 2 | resCount === DestinationCityCount){
                        res.send(tempRes)
                    }
                }
