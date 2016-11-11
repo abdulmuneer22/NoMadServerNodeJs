@@ -30,3 +30,11 @@
     }
   ]
 }
+
+
+
+tempRes.push(
+                       {"text" : CurrentCity},
+                       {"text" : CurrentPriceForThisCity},
+                       {"text" : "https://nomadlist.com/assets/img/cities/"+imagename+"-500px.jpg"}
+                   )
